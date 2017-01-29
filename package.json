@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "babel-loader": "^6.2.10",
+    "graphql": "^0.9.1",
     "lodash": "^4.17.4",
     "pg": "^6.1.2",
     "pg-hstore": "^2.3.2",

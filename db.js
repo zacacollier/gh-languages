@@ -32,9 +32,9 @@ const List = Conn.define('list', {
     type: STRING,
     allowNull: false
   },
-  content: {
-    type: STRING,
-    allowNull: false
+  items: {
+    type: INTEGER,
+    allowNull: true
   }
 })
 
@@ -69,10 +69,24 @@ Items.belongsTo(List);
 
 Conn.sync({force: true}).then(() => {
   return User.create({
-    firstName: 'George',
-    lastName: 'Costanza',
-    ghUsername: 'vandelay'
-  }).then((user) => {
-    console.log(user.get({ plain: true }))
+    firstName: 'Zac',
+    lastName: 'Collier',
+    ghUsername: 'zacacollier'
+  })
+  .then(user => {
+    return user.createList({
+      title: `JavaScript`
+    })
+  })
+  .then(list => {
+    return Items.create({
+      ghUsername: `zacacollier`,
+      avatar: `https://avatars.githubusercontent.com/u/18710669?v=3`,
+      ghUserFirstName: `Zac`,
+      ghUserLastName: `Collier`,
+      ghUserId: 18710669
+    })
   })
 })
+
+//export default Conn;
