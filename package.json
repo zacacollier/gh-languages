@@ -12,13 +12,19 @@
     "test:watch": "nwb test-react --server"
   },
   "dependencies": {
+    "babel-loader": "^6.2.10",
+    "lodash": "^4.17.4",
+    "pg": "^6.1.2",
+    "pg-hstore": "^2.3.2",
     "react": "^15.4.2",
-    "react-dom": "^15.4.2"
+    "react-dom": "^15.4.2",
+    "sequelize": "^3.30.0"
   },
   "devDependencies": {
     "nwb": "0.15.x"
   },
-  "author": "",
+  "author": "Zac Collier <zacacollier@gmail.com>",
   "license": "MIT",
-  "repository": ""
+  "repository": "git@github.com:zacacollier/gh-languages.git",
+  "main": "index.js"
 }
