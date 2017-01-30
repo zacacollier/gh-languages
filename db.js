@@ -32,7 +32,7 @@ const List = Conn.define('list', {
     type: STRING,
     allowNull: false
   },
-  items: {
+  contents: {
     type: INTEGER,
     allowNull: true
   }
@@ -75,7 +75,7 @@ Conn.sync({force: true}).then(() => {
   })
   .then(user => {
     return user.createList({
-      title: `JavaScript`
+      title: `JavaScript`,
     })
   })
   .then(list => {
@@ -89,4 +89,4 @@ Conn.sync({force: true}).then(() => {
   })
 })
 
-//export default Conn;
+module.exports = Conn;
