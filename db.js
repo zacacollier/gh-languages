@@ -1,4 +1,4 @@
-const Sequelize = require('sequelize')
+import Sequelize from 'sequelize';
 
 const Conn = new Sequelize(
   'gh',
@@ -89,4 +89,4 @@ Conn.sync({force: true}).then(() => {
   })
 })
 
-module.exports = Conn;
+export default Conn;

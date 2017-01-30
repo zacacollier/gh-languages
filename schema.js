@@ -1,10 +1,10 @@
-import graphql, { 
-  GraphQLObjectType, 
+import graphql, {
+  GraphQLObjectType,
   GraphQLSchema,
   GraphQLString,
   GraphQLInt,
   GraphQLList
-} from 'graphql';
+}              from 'graphql';
 import DB      from './db';
 
 const User = new GraphQLObjectType({
@@ -36,6 +36,12 @@ const User = new GraphQLObjectType({
           return user.ghUsername;
         }
       },
+      lists: {
+        type: new GraphQLList(Lists),
+        resolve(user) {
+          return user.getLists();
+        }
+      }
     }
   }
 })
@@ -63,29 +69,44 @@ const Lists = new GraphQLObjectType({
           return list.items;
         }
       },
+      user: {
+        type: User,
+        resolve(list) {
+          return list.getUser();
+        }
+      },
     }
   }
 })
 
 const Query = new GraphQLObjectType({
   name: `Query`,
-  description: `A root query`,
+  description: `A root query`,  // root being 'Users'
   fields: () => {
     return {
       users: {
         type: new GraphQLList(User),
-        args: {
+        args: {                // restrict returnable data with args
           id: {
             type: GraphQLInt
           },
           ghUsername: {
             type: GraphQLString
+          },
+          lists: {
+            type: GraphQLString
           }
         },
         resolve(root, args) {
-          return DB.models.users.findAll({where: args})
+          return DB.models.user.findAll({where: args}) // remember that the model queried must match the name defined in db.js!!!
         }
-      }
+      },
+      lists: {
+        type: new GraphQLList(Lists),
+        resolve(root, args) {
+          return DB.models.list.findAll({where: args})
+        }
+      },
     };
   }
 });
@@ -94,4 +115,4 @@ const Schema = new GraphQLSchema({
   query: Query
 });
 
-module.exports = Schema;
+export default Schema;
