@@ -3,7 +3,8 @@ import graphql, {
   GraphQLSchema,
   GraphQLString,
   GraphQLInt,
-  GraphQLList
+  GraphQLList,
+  GraphQLNonNull
 }              from 'graphql';
 import DB      from './db';
 
@@ -111,8 +112,39 @@ const Query = new GraphQLObjectType({
   }
 });
 
+const Mutation = new GraphQLObjectType({
+  name: `Mutation`,
+  description: `Create users, lists and items`,
+  fields () {
+    return {
+      addUser: {
+        type: User,
+        args: {
+          firstName: {
+            type: new GraphQLNonNull(GraphQLString) // basically saying null is not permitted
+          },
+          lastName: {
+            type: new GraphQLNonNull(GraphQLString)
+          },
+          ghUsername: {
+            type: new GraphQLNonNull(GraphQLString)
+          }
+        },
+        resolve(_, args) {                          // '_' means we're not specifying a specific query here
+          return DB.models.user.create({
+            firstName: args.firstName,
+            lastName: args.lastName,
+            ghUsername: args.ghUsername.toLowerCase()
+          });
+        }
+      }
+    }
+  }
+})
+
 const Schema = new GraphQLSchema({
-  query: Query
+  query: Query,
+  mutation: Mutation
 });
 
 export default Schema;
