@@ -5,6 +5,8 @@ import Express                     from 'express';
 import GraphHTTP                   from 'express-graphql';
 import methodOverride              from 'method-override';
 import passport                    from 'passport';
+import session                     from 'express-session';
+const  FileStore                   =    require('session-file-store')(session);
 import Schema                      from './schema/schema.js';
 import { Strategy } from 'passport-github2';
 import                                  './services/passport.js';
@@ -12,11 +14,11 @@ import                                  './services/passport.js';
 const app         =     Express();
 const PORT        =     4000;
 
-// 'code' will be set when response is received from GitHub
+//TODO: Save user to database with findOrCreate
 passport.use('github', new Strategy ({
   clientID: process.env.CLIENT_KEY,
   clientSecret: process.env.CLIENT_SECRET,
-  callbackURL: 'localhost:4000/login/success',
+  callbackURL: 'http://localhost:4000/user',
 }, (accessToken, refreshToken, profile, done) => {
   console.log(`${accessToken}, ${refreshToken}, ${profile}`)
   User.findOne({ where: { ghUserId: profile.id }})
@@ -24,17 +26,20 @@ passport.use('github', new Strategy ({
       .catch(err => console.log(`Cannot find user: ${err}`))
 }));
 
+app.use(require('morgan')('dev'))
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(methodOverride());
+app.use(session({
+  cookieName: 'server-session-cookie-id',
+  secret: 'keyboard cat',
+  saveUninitialized: true,
+  resave: true,
+  store: new FileStore()
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/graphql', GraphHTTP({
-  schema: Schema,
-  pretty: true,
-  graphiql: true
-}))
 
 app.get('/',
   passport.authenticate('github', { failureRedirect: '/login' }),
@@ -46,9 +51,14 @@ app.get('/login',
   (req, res) => res.redirect('/user')
 )
 
-function isAuthenticated(req, res, next) {
-  return req.isAuthenticated() ? next() : res.redirect('/login')
-}
+app.use('/graphql', GraphHTTP({
+  schema: Schema,
+  pretty: true,
+  graphiql: true
+}))
+// function isAuthenticated(req, res, next) {
+//   return req.isAuthenticated() ? next() : res.redirect('/login')
+// }
 
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
