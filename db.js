@@ -25,6 +25,14 @@ const User = Conn.define('user', {
     type: STRING,
     allowNull: false
   },
+  email: {
+    type: STRING,
+    allowNull: false
+  },
+  ghUserId: {
+    type: INTEGER,
+    allowNull: false
+  }
 })
 
 const List = Conn.define('list', {
@@ -71,7 +79,9 @@ Conn.sync({force: true}).then(() => {
   return User.create({
     firstName: 'Zac',
     lastName: 'Collier',
-    ghUsername: 'zacacollier'
+    ghUsername: 'zacacollier',
+    email: 'zacacollier@gmail.com',
+    ghUserId: 18710669
   })
   .then(user => {
     return user.createList({

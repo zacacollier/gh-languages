@@ -6,7 +6,7 @@ import graphql, {
   GraphQLList,
   GraphQLNonNull
 }              from 'graphql';
-import DB      from './db';
+import DB from '../db.js'
 
 const User = new GraphQLObjectType({
   name: `User`,
@@ -35,6 +35,12 @@ const User = new GraphQLObjectType({
         type: GraphQLString,
         resolve(user) {
           return user.ghUsername;
+        }
+      },
+      email: {
+        type: GraphQLString,
+        resolve(user) {
+          return user.email;
         }
       },
       lists: {
