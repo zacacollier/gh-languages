@@ -25,7 +25,7 @@ export const makeMainRoutes = () => {
     <Route path="/" component={Container} auth={auth}>
       <IndexRedirect to="/home" />
       <Route path="home" component={Home} onEnter={requireAuth} />
-      <Route path="login" component={Login} />
+      <Route path="login" component={Login} onEnter={parseAuthHash} />
     </Route>
   )
 }
