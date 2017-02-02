@@ -44,18 +44,18 @@ export class Login extends React.Component {
         <Form onSubmit={this.login.bind(this)}>
           <FormGroup controlId="email">
             <ControlLabel>Email</ControlLabel>
-            <FormControl type="email" ref="email" placeholder="tom@myspace.com" required />
+            <FormControl type="email" ref="email" placeholder="'tom@myspace.com'" required />
           </FormGroup>
 
           <FormGroup controlId="password">
             <ControlLabel>Password</ControlLabel>
-            <FormControl type="password" ref="password" placeholder="Password" required />
+            <FormControl type="password" ref="password" required />
           </FormGroup>
 
           <ButtonToolbar className={styles.toolbar}>
             <Button type="submit" bsStyle="primary" onClick={auth.login.bind(this)}>Login</Button>
             <Button bsStyle="primary" onClick={this.signup.bind(this)}>Sign Up</Button>
-            <Button bsStyle="link" onClick={this.loginWithGitHub.bind(this)}>
+            <Button bsStyle="primary" onClick={this.loginWithGitHub.bind(this)}>
               Login with GitHub
             </Button>
           </ButtonToolbar>

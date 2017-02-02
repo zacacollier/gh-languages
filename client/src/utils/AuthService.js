@@ -8,11 +8,10 @@ export default class AuthService extends EventEmitter {
     super()
     // Configure Auth0
     this.auth0 = new auth0.WebAuth({
-      clientID: clientId,
-      domain: domain,
+      clientID: 'ezsFdDPSYvu8EFCEU639Fy4gw7OVaOj9',
+      domain: 'zacacollier.auth0.com',
       responseType: 'token id_token',
-      redirectUri: 'https://zacacollier.auth0.com/login/callback'
-      // redirectUri: `${window.location.origin}/login`
+      redirectUri: `${window.location.origin}/login`
     })
 
     this.login = this.login.bind(this)
@@ -53,6 +52,7 @@ export default class AuthService extends EventEmitter {
     this.auth0.authorize({
       connection: 'github'
     })
+      debugger
   }
 
   parseHash(hash) {
