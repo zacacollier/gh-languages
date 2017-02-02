@@ -31,12 +31,18 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(methodOverride());
 app.use(session({
-  cookieName: 'server-session-cookie-id',
+  store: new (require('connect-pg-simple')(session)),
   secret: 'keyboard cat',
-  saveUninitialized: true,
-  resave: true,
-  store: new FileStore()
+  resave: false,
+  cookie: { maxAge: 30 * 24 * 60 * 1000 } // 30 days
 }));
+// app.use(session({
+//   cookieName: 'server-session-cookie-id',
+//   secret: 'keyboard cat',
+//   saveUninitialized: true,
+//   resave: true,
+//   store: new FileStore()
+// }));
 app.use(passport.initialize());
 app.use(passport.session());
 
