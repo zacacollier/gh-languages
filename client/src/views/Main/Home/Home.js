@@ -25,7 +25,9 @@ export class Home extends React.Component {
   }
 
   logout(){
+    // wipes session data
     this.props.auth.logout()
+    // redirect to login
     this.context.router.push('/login');
   }
 

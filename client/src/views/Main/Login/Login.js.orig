@@ -55,8 +55,16 @@ export class Login extends React.Component {
           <ButtonToolbar className={styles.toolbar}>
             <Button type="submit" bsStyle="primary">Login</Button>
             <Button bsStyle="primary" onClick={this.signup.bind(this)}>Sign Up</Button>
+<<<<<<< HEAD
+            <Button bsStyle="primary" onClick={this.loginWithGitHub.bind(this)}>
+              Login with GitHub
+||||||| merged common ancestors
+            <Button bsStyle="link" onClick={this.loginWithGitHub.bind(this)}>
+              Login with GitHub
+=======
             <Button bsStyle="link" onClick={this.loginWithGoogle.bind(this)}>
               Login with Google
+>>>>>>> google
             </Button>
           </ButtonToolbar>
         </Form>
