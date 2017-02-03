@@ -32,6 +32,10 @@ export class Login extends React.Component {
     this.props.auth.signup(email, password)
   }
 
+  loginWithGitHub() {
+    this.props.auth.loginWithGoogle();
+  }
+
   loginWithGoogle() {
     this.props.auth.loginWithGoogle();
   }
@@ -55,8 +59,11 @@ export class Login extends React.Component {
           <ButtonToolbar className={styles.toolbar}>
             <Button type="submit" bsStyle="primary">Login</Button>
             <Button bsStyle="primary" onClick={this.signup.bind(this)}>Sign Up</Button>
-            <Button bsStyle="link" onClick={this.loginWithGoogle.bind(this)}>
+            <Button bsStyle="primary" onClick={this.loginWithGoogle.bind(this)}>
               Login with Google
+            </Button>
+            <Button bsStyle="primary" onClick={this.loginWithGitHub.bind(this)}>
+              Login with GitHub
             </Button>
           </ButtonToolbar>
         </Form>

@@ -19,6 +19,7 @@ export class Home extends React.Component {
     this.state = {
       profile: props.auth.getProfile()
     }
+    // update internal state based on profile_updated events
     props.auth.on('profile_updated', (newProfile) => {
       this.setState({profile: newProfile})
     })

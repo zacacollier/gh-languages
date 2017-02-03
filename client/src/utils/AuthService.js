@@ -12,7 +12,7 @@ export default class AuthService extends EventEmitter {
       clientID: 'ezsFdDPSYvu8EFCEU639Fy4gw7OVaOj9',
       domain: 'zacacollier.auth0.com',
       responseType: 'token id_token',
-      redirectUri: 'http://localhost:3000/login'
+      redirectUri: 'http://localhost:3000/login',
     })
     this.lock = new Auth0Lock(clientId, domain, {
       auth: {
@@ -25,6 +25,7 @@ export default class AuthService extends EventEmitter {
     this.login = this.login.bind(this)
     this.signup = this.signup.bind(this)
     this.loginWithGoogle = this.loginWithGoogle.bind(this)
+    this.loginWithGitHub = this.loginWithGitHub.bind(this)
   }
 
   _doAuthentication(authResult) {
@@ -67,6 +68,12 @@ export default class AuthService extends EventEmitter {
       if (err) {
         alert('Error: ' + err.description)
       }
+    })
+  }
+
+  loginWithGitHub() {
+    this.auth0.authorize({
+      connection: 'github'
     })
   }
 
