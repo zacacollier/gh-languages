@@ -36,7 +36,6 @@ export class Home extends React.Component {
     const { profile } = this.state
     return (
       <div className={styles.root}>
-        <h2>Home</h2>
         <p>Welcome {profile.name}!</p>
         <ProfileDetails profile={profile}></ProfileDetails>
         <ProfileEdit profile={profile} auth={this.props.auth}></ProfileEdit>

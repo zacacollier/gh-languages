@@ -33,7 +33,7 @@ export class Login extends React.Component {
   }
 
   loginWithGitHub() {
-    this.props.auth.loginWithGoogle();
+    this.props.auth.loginWithGitHub();
   }
 
   loginWithGoogle() {

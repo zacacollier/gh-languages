@@ -6,6 +6,7 @@ export class ProfileDetails extends React.Component {
     profile: T.object
   }
 
+// TODO: automatically select favorite language based off of repo count
   render() {
     const { profile } = this.props
     return (
@@ -15,11 +16,9 @@ export class ProfileDetails extends React.Component {
         </Col>
         <Col md={6}>
           <h3>Profile</h3>
-          <p><strong>Name: </strong> { profile.name }</p>
-          <p><strong>Email: </strong> { profile.email }</p>
-          <p><strong>Nickname: </strong> { profile.nickname }</p>
-          <p><strong>Created At: </strong> { profile.created_at }</p>
-          <p><strong>Updated At: </strong> { profile.updated_at }</p>
+          <p><strong>{ profile.name }</strong></p>
+          <p><strong>{ profile.nickname }</strong></p>
+          <p><strong>{ profile.public_repos }</strong> </p>
         </Col>
       </Row>
     )

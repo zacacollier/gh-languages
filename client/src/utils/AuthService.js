@@ -20,8 +20,11 @@ export default class AuthService extends EventEmitter {
         responseType: 'token'
       }
     })
+    this.domain = domain // setting domain param as an instance attribute
     // Add callback for lock `authenticated` event
     this.lock.on('authenticated', this._doAuthentication.bind(this))
+    // Add callback for lock `authorization_error` event
+    this.lock.on('authorization_error', this._authorizationError.bind(this))
     this.login = this.login.bind(this)
     this.signup = this.signup.bind(this)
     this.loginWithGoogle = this.loginWithGoogle.bind(this)
@@ -33,6 +36,15 @@ export default class AuthService extends EventEmitter {
     this.setToken(authResult.idToken)
     // navigate to the home route
     browserHistory.replace('/home')
+    // Async loads the user profile data
+    this.lock.getProfile(authResult.idToken, (error, profile) => {
+      if (error) console.log(`Error loading User Profile: ${error}`)
+      else this.setProfile(profile)
+    })
+  }
+
+  _authorizationError(error) {
+    console.log(`Authentication Error: ${error}`)
   }
 
   login(username, password) {
@@ -123,6 +135,21 @@ export default class AuthService extends EventEmitter {
     localStorage.setItem('profile', JSON.stringify(profile))
     // Triggers profile_updated event to update the UI
     this.emit('profile_updated', profile)
+  }
+
+  updateProfile(userId, data) {
+    const headers = {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.getToken() // setting authorization header
+    }
+    return fetch(`https://${this.domain}/api/v2/users/${userId}`, {
+        method: 'PATCH',
+        headers: headers,
+        body: JSON.stringify(data)
+      })
+      .then(response => response.json())
+      .then(newProfile => this.setProfile(newProfile)) //updating current profile
   }
 
   getProfile() {

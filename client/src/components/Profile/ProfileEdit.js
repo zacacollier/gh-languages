@@ -27,7 +27,7 @@ export class ProfileEdit extends React.Component {
     const { profile, auth } = this.props
     auth.updateProfile(profile.user_id, {
       user_metadata: {
-        address: ReactDOM.findDOMNode(this.refs.address).value  // new address
+        address: ReactDOM.findDOMNode(this.refs.language).value  // new address
       }
     })
   }
@@ -42,10 +42,10 @@ export class ProfileEdit extends React.Component {
             <Form horizontal onSubmit={this.handleSubmit.bind(this)}>
               <FormGroup controlId="address">
                 <Col componentClass={ControlLabel} sm={2}>
-                  Address
+                  Language of Choice:
                 </Col>
                 <Col sm={10}>
-                  <FormControl type="text" defaultValue={address} ref="address" />
+                  <FormControl type="text" defaultValue={"'fortran'"} ref="language" />
                 </Col>
               </FormGroup>
               <FormGroup>
